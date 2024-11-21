@@ -1,0 +1,152 @@
+---
+title: "Week 8 Wednesday Worksheet"
+author: "Valentino Aceves"
+date: "May 22, 2024"
+output: pdf_document
+---
+
+# Joint Hypothesis Testing
+
+$$
+Y =\beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4
+$$
+An example of a Joint Null Hypothesis could be
+$$
+H_0: \beta_1 =\beta_2=0\ \ \ \ \ , \ \ \ \ H_1:\text{at least one of the estimates}\ne0
+$$
+We can now create two different models:
+
+**Unrestricted Regression** which is our original:
+$$
+Y =\beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4
+$$
+
+**Restricted Regression** where we assume $H_0$ is true:
+$$
+Y =\beta_0 + \beta_3X_3 + \beta_4X_4
+$$
+
+Let $SSR_u$, $SSR_r$ be the $SSR$'s of the unrestricted and restricted models respectively. Let $p=4$ be the number of parameters in the unrestricted model. Let $q=2$ be the number of parameters in the restricted model. 
+We calculate our $F$ statistic with
+$$
+\hat{F} = \frac{(SSR_r - SSR_u)/(p-q)}{SSR_u/(n-p-1)} \sim F_{df_1,df_2}
+$$
+where $df_1 = p-q$ and $df_2 = n-p-1$. We reject $H_0$ when $\hat{F} > F_{df_1,df_2}^c$ or $p_{\hat{F}} < \alpha$.
+
+\newpage
+
+# Example 1
+
+```{r, message=FALSE}
+library(POE5Rdata)
+data("cocaine")
+```
+```{r}
+names(cocaine)
+```
+
+
+```{r}
+unrestricted_model <- lm(price ~ quant + qual + trend, cocaine)
+restricted_model <- lm(price ~ quant, cocaine)
+```
+### Perform an F test with the restricted and unrestricted models from above. State $H_0$ and $H_1$.
+
+```{r}
+df1 <- 3 - 1 # p-q
+df2 <- unrestricted_model$df.residual # n-p-1
+c(df1, df2)
+```
+
+```{r}
+SSR_u <- sum(unrestricted_model$residuals^2)
+SSR_r <- sum(restricted_model$residuals^2)
+c(SSR_u, SSR_r)
+```
+
+```{r}
+Fc <- qf(0.95, df1, df2)
+F_stat <- ((SSR_r - SSR_u)/df1) / (SSR_u/df2)
+c(Fc, F_stat)
+```
+
+
+```{r}
+1 - pf(F_stat, df1, df2)
+```
+
+\newpage
+
+# F-tests on Single Variables
+
+Consider these two model for an F-test:
+
+**Unrestricted Regression**
+$$
+Y =\beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 
+$$
+
+**Restricted Regression**
+$$
+Y =\beta_0 + \beta_1X_1 + \beta_2X_2
+$$
+
+
+
+```{r}
+unrestricted_model <- lm(price ~ quant + qual + trend, cocaine)
+restricted_model <- lm(price ~ quant + qual, cocaine)
+```
+### Perform an F test with the restricted and unrestricted models from above. State $H_0$ and $H_1$.
+
+```{r}
+df1 <- 3 - 2 # p-q
+df2 <- unrestricted_model$df.residual # n-p-1
+SSR_u <- sum(unrestricted_model$residuals^2)
+SSR_r <- sum(restricted_model$residuals^2)
+```
+
+```{r}
+Fc <- qf(0.95, df1, df2)
+F_stat <- ((SSR_r - SSR_u)/df1) / (SSR_u/df2)
+c(Fc, F_stat)
+```
+
+Couldn't we also do a t-test on the single variable? Sure.
+
+```{r}
+summary(unrestricted_model)
+```
+
+We can see the t-statistic for $H_0: \beta_3 = 0, H_1:\beta_3\ne0$ is $\hat{t}=-1.699$. 
+
+```{r}
+summary(unrestricted_model)$coefficients[4, 3] ^ 2 # t_hat squared
+```
+
+In a single variable hypothesis test, when we square the t-statistic, we get exactly the F-statistic.
+
+\newpage
+
+# F-Tests for Overall Significance
+
+When we run a summary table, it gives us an F-stat along with its p-value. What is the F-test that the regression is running for us?
+
+$$
+H_0:\beta_1=\beta_2=\cdots=\beta_k=0 \ \ \ \ \ \ \ \text{vs}\ \ \ \ \ \ \ H_1:\text{at least one } \beta_i\ne0
+$$
+Which leaves us with a restricted model of
+$$
+Y=\beta_0\ \ \ \ \ \ \implies\ \ \ \ \ \beta_0=\bar{Y}
+$$
+$$
+\implies SSR_r = \sum_{i=1}^n (y_i-\hat{y}_i)^2 = \sum_{i=1}^n (y_i-\bar{y})^2 = TSS
+$$
+
+### Prove that, in this model, $F$ statistic becomes
+
+$$
+\hat{F}=\frac{R^2/p}{(1-R^2)/(n-p-1)}
+$$
+
+

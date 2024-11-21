@@ -1,0 +1,108 @@
+---
+title: "Week 6 Monday Worksheet"
+author: "Valentino Aceves"
+date: "May 6th, 2024"
+output: pdf_document
+---
+
+```{r}
+library(POE5Rdata)
+```
+
+```{r}
+data(wa_wheat)
+names(wa_wheat)
+```
+```{r}
+model <- lm(chapman ~ time, data = wa_wheat)
+resid <- model$residuals
+plot(resid ~ wa_wheat$time, col = "pink", pch = 18)
+```
+
+```{r}
+library(tseries)
+```
+```{r}
+jarque.bera.test(resid)
+```
+We fail to reject the null hypothesis. The residuals are distributed normally "enough".
+
+```{r part 5b}
+model_linlog <- lm(chapman ~ log(time), data = wa_wheat)
+resid_linlog <- model_linlog$residuals
+plot(resid_linlog ~ log(wa_wheat$time), pch = 18, col = "pink")
+```
+
+```{r}
+jarque.bera.test(resid_linlog)
+```
+
+## Part C
+
+```{r}
+summary(model)
+summary(model_linlog)
+```
+
+When comparing R2 the linear model explains more of the variance in chapman than the linear log model. When we look at the jbtest, the linlog model has a lower pvalue. this means the errors are distributed less normally than the errors in the linear model. talk about plots. plot the fitted equations against the data. You guys make the claims, here is the evidence.
+
+<!-- plotting fitted line -->
+
+```{r plot linear}
+plot(wa_wheat$chapman ~ wa_wheat$time)
+abline(model)
+```
+```{r plot linlog}
+plot(wa_wheat$chapman ~ wa_wheat$time)
+curve(model_linlog$coefficients[1] + model_linlog$coefficients[2] * log(x), 
+      add = TRUE, lwd = 2, col = "skyblue")
+```
+
+
+
+
+# Question 4
+
+```{r part 4a}
+m1_b0 <- 3.446
+m1_b1 <- -0.001459
+m1_yhat <- m1_b0 + m1_b1 * (10 - 35)^2
+m1_yhat
+```
+
+```{r}
+m2_b0 <- 1.4276
+m2_b1 <- 0.5343
+m2_yhat <- m2_b0 + m2_b1 * log(10)
+m2_yhat
+```
+
+```{r part b}
+m1_marg <- 2 * m1_b1 * (10 - 35)
+m1_marg
+m2_marg <- m2_b1 / 10
+m2_marg
+```
+
+### part c
+
+$$
+\lambda_1 = 2\cdot \beta_1 \cdot (EXPER - 35)\\
+SE(\lambda_1) = \sqrt{Var(\lambda_1)} = \sqrt{Var(2\cdot \beta_1 \cdot (EXPER - 35))}
+$$
+```{r}
+se_m1 <- sqrt(2^2 * (10-35)^2 * (0.0000786)^2)
+se_m1
+tc <- qt(0.975, 48)
+m1_yhat + c(-tc, tc) * se_m1
+```
+
+```{r}
+se_m2 <- sqrt((1/10)^2 * (0.04333)^2)
+se_m2
+m2_yhat + c(-tc, tc) * se_m2
+```
+
+
+
+

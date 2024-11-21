@@ -1,0 +1,87 @@
+---
+title: "Week 10 Monday Worksheet"
+author: "Valentino Aceves"
+date: "June 3, 2024"
+output: pdf_document
+---
+
+# Nonlinear Relationships 
+
+### Polynomial
+
+$$
+Y=\beta_0 + \beta_1X +  \beta_2X^2
+$$
+$$
+\frac{\partial E[Y|X]}{\partial X}|_{X=x}=\beta_1 + 2\beta_2x
+$$
+
+
+### Log 
+
+![](log)
+
+\
+\
+\
+\
+\
+\
+
+### Interaction
+
+$$
+Y=\beta_0 + \beta_1X_1 +  \beta_2X_2 + \beta_3 (X_1 \times X_2)
+$$
+$$
+\frac{\partial E[Y|X_1, X_2]}{\partial X_1}|_{X_1=x_1, X_2=x_2}=\beta_1 + \beta_3x_2
+$$
+
+\newpage
+
+# Example
+
+$$
+\text{wage} = 10 + \text{exp} + 2\text{exp}^2 + 3\text{male} + 4(\text{exp}\times\text{male}) + 5\log(\text{edu})
+$$
+
+1) Find and interpret the partial derivative for experience, education, and gender.
+\
+\
+\
+\
+\
+\
+
+
+
+2) What is the effect of gender when you have 5 years of experience?
+\
+\
+\
+\
+\
+\
+\
+
+3) What is the marginal effect of 10 years of experience when you are male compared to being female?
+\
+\
+\
+\
+\
+\
+
+4) What is the difference in wage between males and females with 10 years of experience?
+\
+\
+\
+\
+\
+\
+
+5) What is the effect of an increase in education?
+\newpage
+
+
+
