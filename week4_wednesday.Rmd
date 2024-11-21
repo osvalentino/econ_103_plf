@@ -1,0 +1,133 @@
+---
+title: "Week 4 Wednesday Worksheet"
+author: "Valentino Aceves"
+date: "April 24, 2024"
+output: pdf_document
+---
+
+# Hypothesis Testing for $\beta_1$
+
+$$
+H_0: \beta_1=c\ \ \ \ \text{vs.}\ \ \ \ H_1:\beta_1\ne c
+$$
+In hypothesis testing, we make an assumption or initial guess about what the slope could be. Most of the time, we test $\beta_1=0$ because this would mean there is no relationship between X and Y. 
+
+Under the null hypothesis, we have the test statistic
+$$
+\hat{t} = \frac{\hat{b}_1 - \beta_1}{SE(\hat{b}_1)}\sim t(d.f. = n-2)
+$$
+$\beta_1$ is interpretable into "real world" values (eg. salary), however $\hat{t}$ is not. $\hat{t}$ is $\beta_1$ transformed to be interpretable in the "t-world" with respect to what we are testing it against. Think of $\hat{t}$ as $\beta_1$ but in the "t-world" instead of the "real world". Its also basically a z-score.
+
+Let $\alpha=$ significance level. Let $t_c=t_{(1-\frac{\alpha}{2}, n-2)}$ be the $(1-\frac{\alpha}{2})$ quantile of the $t(n-2)$ distribution. For two-sided hypothesis test, that is
+$$
+P(t(n-2) > t_c) =P(t(n-2) < - t_c) = \frac{\alpha}{2}
+$$
+
+For two sided tests, we **reject the null hypothesis** when our t-statistic is "more extreme" than the t-value or when the p-value is less than our significance level. 
+$$
+|\hat{t}|> t_c \ \ \ \ \ \longleftrightarrow \ \ \ \ P(|t(n-2)| > |\hat{t}|)=p <\alpha
+$$
+
+\newpage
+
+# Interpretation
+
+How do we make sense of p-value? By formal definition, p-value is the probability of drawing another sample and compute another estimate $\beta_1$ such that this new $\beta_1$ is at least as “extreme” as the one you actually computed/observed using your current sample, assuming the null is true. In other words: Assuming our null hypothesis is true, $p$ is the probability of drawing a sample to give us our $\hat{b}_1$. $p$ is $\hat{t}$ in the "probability world".
+
+We reject the null hypothesis when $p<\alpha$. This is saying that we drew a sample that was so extreme, it has less than an $\alpha$% chance of occurring if we assume the null hypothesis is true.
+
+We **want** to prove ourselves wrong with hypothesis testing. If $p>\alpha$, we **fail to reject** the null hypothesis.
+
+$t_c$ is to $\hat{t}$ as $\alpha$ is to $p$. $t_c$ and $\alpha$ are the threshold to reject the null hypothesis but in the "t-world" and "probability world" respectively. $\hat{t}$ and $p$ is the regression's $\hat{b}_1$ but transformed to be interpretable in the "probability world" and "t-world" respectively. Mathematically, $p$ is the probability that anything greater $\hat{t}$ were to occur in the $t(n-2)$ distribution (t-world). $\alpha$ is the probability that anything greater than $t_c$ were to occur in the $t(n-2)$ distribution.
+$$
+P(|t(n-2)| > |\hat{t}|)=p\ \ \ \ \ \ \ \ \ \ \ P(t(n-2) > t_c) =P(t(n-2) < - t_c) = \frac{\alpha}{2}
+$$
+
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
+
+# Confidence Interval
+
+$$
+[ \hat{b}_1 - t_c \cdot SE(\hat{b}_1)\ ,\ \hat{b}_1 + t_c \cdot SE(\hat{b}_1)]
+$$
+where $t_c=t_{(1-\frac{\alpha}{2}, n-2)}$. If $\beta_1$ is outside of the confidence interval, we would reject the null hypothesis.
+
+
+\newpage
+
+![]("table")
+![]("table2")
+
+<!-- \newpage -->
+
+<!-- # Example -->
+
+<!-- Suppose the relationship between food expenditure and income is given by -->
+<!-- $$ -->
+<!-- \text{food exp} = \beta_0 + \beta_1\text{income} + \varepsilon -->
+<!-- $$ -->
+<!-- After running the regression on a sample, we find that $\hat{b}_1=10.209$, $SE(\hat{b}_1)=2.09$, $\hat{b}_0=83.416$, and $SE(\hat{b}_0)=43.4$. -->
+
+<!-- (a) Construct a 95% confidence interval for $\hat{b}_1$. -->
+
+<!-- ```{r} -->
+<!-- b1_hat <- 10.209 -->
+<!-- se_b1_hat <- 2.09 -->
+<!-- b0_hat <- 83.416 -->
+<!-- se_b0_hat <- 43.4 -->
+<!-- N <- 100 -->
+<!-- tc <- abs(qt(1 - 0.05/2, 100 - 2)) -->
+<!-- tc -->
+<!-- c(b1_hat - tc * se_b1_hat, b1_hat + tc * se_b1_hat) -->
+<!-- ``` -->
+
+
+<!-- (b) Perform the hypothesis test:$H_0:\beta_1=0\ \ ,\ \ H_1:\beta_1\ne 0$ -->
+
+<!-- ```{r} -->
+<!-- t_hat <- abs((b1_hat - 0) / se_b1_hat) -->
+<!-- t_hat -->
+<!-- tc -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- pnorm(t_hat, 100 - 2) -->
+<!-- ``` -->
+
+
+<!-- (c) Suppose $Cov(\hat{b}_0, \hat{b}_1)=-85.9$. Calculate $SE(\hat{b}_0 +2\hat{b}_1)$. Hint: $\sqrt{\hat{Var}(x)} = SE(x)$ and use $Var(aX+bY)$ formula. -->
+
+<!-- ```{r} -->
+<!-- cov_b0b1 <- -85.9 -->
+<!-- se_b0_2b1 <- sqrt(se_b0_hat^2 + 4*se_b1_hat^2 + 4*cov_b0b1) -->
+<!-- se_b0_2b1 -->
+<!-- ``` -->
+
+<!-- (d) Construct a 95% confidence interval for $\beta_0 + 2\beta_1$. -->
+
+<!-- ```{r} -->
+<!-- y0_hat <- b0_hat + 2*b1_hat -->
+<!-- y0_hat + c(-tc, tc) * se_b0_2b1 -->
+<!-- ``` -->
+
+

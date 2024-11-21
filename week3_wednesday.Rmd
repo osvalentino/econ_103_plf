@@ -1,0 +1,89 @@
+---
+title: "Week 3 Monday Worksheet"
+author: "Valentino Aceves"
+output: pdf_document
+---
+
+# Distribution of $\hat{b}_0$ and $\hat{b}_1$
+
+$$
+\hat{b}_0 = \bar{Y}- \hat{b}_1 \bar{X}
+$$
+$$
+\hat{b}_1 = \frac{\sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}
+$$
+
+Note that $\hat{b}_0$ and $\hat{b}_1$ are functions of random variables, so they are also random. Because they are random, we are interested in their distributions.
+$$
+\hat{b}_0 \sim N(\beta_0, \text{Var}(\hat{b}_0))\ \ \ \text{where}\ \ \ \text{Var}(\hat{b}_0)=
+\sigma^2\frac{\frac{1}{n}\sum_{i=1}^N x_i^2}{\sum_{i=1}^n(x_i-\bar{x})^2}
+\approx\sigma^2\frac{\text{Var}(x)+\bar{x}^2}{n\text{Var}(x)}
+$$
+$$
+\hat{b}_1 \sim N(\beta_1, \text{Var}(\hat{b}_1))\ \ \ \text{where}\ \ \ \text{Var}(\hat{b}_1)=
+\sigma^2\frac{1}{\sum_{i=1}^n(x_i-\bar{x})^2}
+\approx\sigma^2\frac{1}{n\text{Var}(x)}
+$$
+where $n=$ number of observations, $\sigma^2=\text{Var}(\varepsilon_i)=$ variance of errors.
+
+Notice that:
+
+> Larger sample size $n \implies$ smaller variances of estimators (i.e. our estimators are more precise).
+
+> Larger variance of explanatory variable $Var(x) \implies$ smaller variances of estimators.
+
+> Smaller variance of error $\text{Var}(\varepsilon_i)=\sigma^2 \implies$ smaller variances of estimators.
+
+\newpage
+
+# More Stuff:
+
+
+Properties of $\varepsilon_i = y_i - \hat{b}_0-\hat{b}_1x_i$:
+
+$$
+\sum_{i=1}^n \varepsilon_i =0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \sum_{i=1}^n \varepsilon_i x_i =0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \varepsilon\sim N(0, \sigma^2)
+$$
+
+\
+\
+\
+\
+\
+\
+
+
+
+Another problem: The errors, $\varepsilon_i$, are also a random variable. So how do we estimate the variance of the errors, $\text{Var}(\varepsilon_i)=\sigma^2$?
+
+$$
+\hat{\sigma}^2 = \frac{1}{n-2}\sum_{i=1}^n{\varepsilon}_i^2= \frac{1}{n-2}\sum_{i=1}^n(y_i-\hat{y}_i)^2= \frac{SSR}{n-2}
+$$
+
+
+\
+\
+\
+\
+\
+\
+\
+
+$$
+E[Y|X=x]=\beta_0+\beta_1x\ \ \ \ \implies \ \ \ \ \frac{\partial E[Y|X=x]}{\partial x}=\beta_1
+$$
+
+\
+\
+\
+\
+\
+\
+\
+
+
+$$
+\text{Var}(\hat{y})=\text{Var}(\hat{b}_0+\hat{b}_1x)=\text{Var}(\hat{b}_0)+\text{Var}(\hat{b}_1)x^2+2x\text{Cov}(\hat{b}_0, \hat{b}_1)
+$$
+
+

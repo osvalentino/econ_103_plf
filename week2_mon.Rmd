@@ -1,0 +1,78 @@
+---
+title: "Week 2 Monday Worksheet"
+author: "Valentino Aceves"
+date: "April 4, 2024"
+output: pdf_document
+---
+
+Welcome to the session! Moving forward I will try to incorporate more of the homework and R coding into the worksheets. For the first session, I decided we would go over the basics. 
+
+# Concepts / Definitions
+
+## Probability Density Function (pdf)
+
+The probability density function (pdf) is a function $f_X$ associated with a random variable X that describes the likelihood of that random variable X taking a specific value $X = x$, usually written as $f_X(x)$ or simply $f(x)$. As a special case, if X is discrete, the pdf indicates the probability of each possible value occurring $f (x) = Pr(X = x)$.
+
+
+## Cumulative Distribution Function (CDF)
+
+The cumulative distribution function (CDF) indicates the probability that X is less than or equal to a specific value x: $F(x) = Pr(X \le x)$
+
+\
+\
+\
+\
+\
+\
+
+## Central Limit Theory
+
+The central limit theorem states that if you take sufficiently large samples from a population, the samples' means will be normally distributed, even if the population isn't normally distributed.
+
+### Our Definition:
+
+\newpage
+
+## Law of Large Numbers
+
+The law states that as you take larger and larger samples from a population and calculate the average of those samples, the sample mean will converge to the true population mean.
+
+### Our Definition:
+
+\
+\
+\
+\
+\
+\
+
+# Exercises
+
+## Question 1
+
+Suppose $X \sim N(3, 4)$. Find $Pr(X > 3)$.
+
+### Answer:
+
+```{r}
+1 - pnorm(3, mean = 3, sd = 2)
+```
+
+Can you explain the code? Why are we subtracting from 1? Why is sd = 2?
+
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
+
+## Question 2
+
+Suppose $X \sim N(2, 25)$. How can we normalize this? 
+
+Hint: Use the normalizing formula $Z=\frac{X-\mu}{\sigma}=N(0, 1)$ or this formula $Var(aX + bY + c) = a^2Var(X) + b^2Var(Y ) + 2abCov(X, Y)$.
